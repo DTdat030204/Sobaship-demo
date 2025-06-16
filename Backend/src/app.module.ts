@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
+import { PrismaModule } from './prisma/prisma.module'; 
 
 // Đây là root của app.
 // Tập hợp các controller và service ban đầu.
@@ -11,7 +12,7 @@ import { BookmarksModule } from './bookmarks/bookmarks.module';
 
 
 @Module({
-  imports: [AuthModule, UsersModule, BookmarksModule],
+  imports: [AuthModule, UsersModule, BookmarksModule, PrismaModule],
   controllers: [AppController],
   providers: [AppService],
 })
