@@ -3,13 +3,26 @@ import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
-  async onModuleInit() {
-    await this.$connect(); // Kết nối đến database khi ứng dụng khởi động
+  constructor() {
+      super();
+      console.log('Database URL:', process.env.DATABASE_URL);
   }
 
-  async enableShutdownHooks(app: INestApplication) {
-    this.$on('beforeExit', async () => {
-      await app.close(); // Đóng app (đồng thời đóng connection) khi ứng dụng tắt
-    });
+  async onModuleInit() {
+    await this.$connect();
   }
+
+  
+    
+  async enableShutdownHooks(app: INestApplication) {
+    // this.$on?.('beforeExit', async () => {
+    //   await app.close();
+      // });
+    (this as any).$on('beforeExit', async () => {
+        await app.close();
+    });
+      
+    
+    }
+   
 }
