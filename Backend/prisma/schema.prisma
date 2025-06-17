@@ -25,3 +25,21 @@ model User {
   hash      String
   createdAt DateTime @default(now())
 }
+
+
+
+model Asset {
+  id           Int      @id @default(autoincrement())
+  name         String
+  code         String   @unique
+  group        String
+  price        Float
+  purchaseDate DateTime
+  status       String
+  lastMaintenanceDate   DateTime?
+  nextMaintenanceDate   DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+
