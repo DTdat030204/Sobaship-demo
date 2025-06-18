@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsDateString, IsOptional, IsInt } from 'class-validator';
+import { IsString, IsNumber, IsDateString, IsOptional, IsInt, Min} from 'class-validator';
 
 export class CreateAssetDto {
   @IsString()
@@ -22,13 +22,19 @@ export class CreateAssetDto {
   // @IsInt()
   // maintenanceCycleMonths: number;
 
+
+  
+  @IsNumber()
+  @Min(1)
+  maintenanceIntervalMonths: number;
+
   @IsDateString()
   @IsOptional()
   lastMaintenanceDate?: string;
 
-  @IsDateString()
-  @IsOptional()
-  nextMaintenanceDate?: string;
+  // @IsDateString()
+  // @IsOptional()
+  // nextMaintenanceDate?: string;
 
   @IsString()
   status: string;
@@ -55,17 +61,20 @@ export class UpdateAssetDto {
   @IsOptional()
   depreciationValue?: number;
 
-  @IsInt()
-  @IsOptional()
-  maintenanceCycleMonths?: number;
+  // @IsInt()
+  // @IsOptional()
+  // maintenanceCycleMonths?: number;
 
   @IsDateString()
   @IsOptional()
   lastMaintenanceDate?: string;
 
-  @IsDateString()
+  @IsInt()
   @IsOptional()
-  nextMaintenanceDate?: string;
+  maintenanceIntervalMonths?: number;
+  // @IsDateString()
+  // @IsOptional()
+  // nextMaintenanceDate?: string;
 
   @IsString()
   @IsOptional()

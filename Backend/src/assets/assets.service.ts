@@ -7,6 +7,8 @@ import { PrismaService } from '../prisma/prisma.service';
 // import 2 class dto. 
 import { CreateAssetDto, UpdateAssetDto } from './dto/asset.dto';
 
+import { addMonths } from 'date-fns';
+
 @Injectable()
 export class AssetsService {
   // inject PrismaService thông qua constructor => để có thể dùng this.prisma.asset gọi db. (Đó gọi là Dependence Injection.)
@@ -14,14 +16,22 @@ export class AssetsService {
 
   // Hàm này đc dùng để có thể tạo mới 1 tài sản (dto là dữ liệu đầu vào đc gởi từ Controller(REST API)).
   async create(dto: CreateAssetDto) {
+    const lastMaintenanceDate = dto.lastMaintenanceDate ? new Date(dto.lastMaintenanceDate) : undefined;
+
+    // Nếu có lastMaintenanceDate + maintenanceIntervalMonths → tính nextMaintenanceDate
+    const nextMaintenanceDate = (lastMaintenanceDate && dto.maintenanceIntervalMonths)
+      ? addMonths(lastMaintenanceDate, dto.maintenanceIntervalMonths)
+      : undefined;
     // Gọi Prisma để tạo 1 RECORD Asset mới. 
     const asset = await this.prisma.asset.create({
       // Ở đây thì copy toàn bộ field trong dto vào. (nhưng vẫn có các field cần xử lý thêm.)
       data: {
         ...dto,
         purchaseDate: new Date(dto.purchaseDate),
-        lastMaintenanceDate: dto.lastMaintenanceDate ? new Date(dto.lastMaintenanceDate) : undefined,
-        nextMaintenanceDate: dto.nextMaintenanceDate ? new Date(dto.nextMaintenanceDate) : undefined,
+        lastMaintenanceDate,
+        nextMaintenanceDate,
+        
+        // nextMaintenanceDate: dto.nextMaintenanceDate ? new Date(dto.nextMaintenanceDate) : undefined,
       },
     });
     return asset;
@@ -61,13 +71,20 @@ export class AssetsService {
 
 
   async update(id: number, dto: UpdateAssetDto) {
+    const lastMaintenanceDate = dto.lastMaintenanceDate ? new Date(dto.lastMaintenanceDate) : undefined;
+
+    // Nếu người dùng update có lastMaintenanceDate hoặc maintenanceIntervalMonths → tính lại nextMaintenanceDate
+    const nextMaintenanceDate = (lastMaintenanceDate && dto.maintenanceIntervalMonths)
+      ? addMonths(lastMaintenanceDate, dto.maintenanceIntervalMonths)
+      : undefined;
+    
     return this.prisma.asset.update({
       where: { id },
       data: {
         ...dto,
         purchaseDate: dto.purchaseDate ? new Date(dto.purchaseDate) : undefined,
-        lastMaintenanceDate: dto.lastMaintenanceDate ? new Date(dto.lastMaintenanceDate) : undefined,
-        nextMaintenanceDate: dto.nextMaintenanceDate ? new Date(dto.nextMaintenanceDate) : undefined,
+        lastMaintenanceDate,
+        nextMaintenanceDate,
       },
     });
   }

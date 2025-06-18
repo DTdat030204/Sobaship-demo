@@ -35,8 +35,12 @@ model Asset {
   price        Float
   purchaseDate DateTime
   status       String
+
+  // Số tháng cần đi bảo dưỡng
+  maintenanceIntervalMonths Int  
   lastMaintenanceDate   DateTime?
   nextMaintenanceDate   DateTime?
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

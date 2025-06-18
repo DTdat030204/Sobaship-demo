@@ -12,11 +12,13 @@ CREATE TABLE "User" (
 CREATE TABLE "Asset" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "code" TEXT NOT NULL,
     "group" TEXT NOT NULL,
-    "value" DOUBLE PRECISION NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
     "purchaseDate" TIMESTAMP(3) NOT NULL,
     "status" TEXT NOT NULL,
+    "maintenanceIntervalMonths" INTEGER NOT NULL,
+    "lastMaintenanceDate" TIMESTAMP(3),
+    "nextMaintenanceDate" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -27,4 +29,4 @@ CREATE TABLE "Asset" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Asset_code_key" ON "Asset"("code");
+CREATE UNIQUE INDEX "Asset_name_key" ON "Asset"("name");
