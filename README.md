@@ -11,6 +11,7 @@ Backend project cho hệ thống **Soba Ship** — xây dựng bằng **NestJS +
 
 * **PostgreSQL** v15.x hoặc mới hơn
   [https://www.postgresql.org/download/](https://www.postgresql.org/download/)
+  (Ở đây dùng docker với thiết lập trong file docker-compose.yml nên ko cần tải về nữa.)
 
 * **npm** 
 ---
@@ -74,12 +75,10 @@ http://localhost:3000
 ```bash
 npx prisma studio
 ```
+
 ---
 
-## 📚
----
-
-## 🛠️ Lệnh hữu ích
+## Lệnh hữu ích
 
 | Lệnh                                   | Chức năng                                  |
 | -------------------------------------- | ------------------------------------------ |
