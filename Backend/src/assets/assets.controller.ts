@@ -16,9 +16,20 @@ export class AssetsController {
     return this.assetsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.assetsService.findOne(+id);
+  @Get('by-name/:name')
+  findByName(@Param('name') name: string) {
+    return this.assetsService.findByName(name);
+  }
+
+  
+  @Get('by-group/:group')
+  findByGroup(@Param('group') group: string) {
+    return this.assetsService.findByGroup(group);
+  }
+
+  @Get('by-status/:status')
+  findByStatus(@Param('status') status: string) {
+    return this.assetsService.findByStatus(status);
   }
 
   @Patch(':id')

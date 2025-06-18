@@ -30,8 +30,7 @@ model User {
 
 model Asset {
   id           Int      @id @default(autoincrement())
-  name         String
-  code         String   @unique
+  name         String   @unique
   group        String
   price        Float
   purchaseDate DateTime

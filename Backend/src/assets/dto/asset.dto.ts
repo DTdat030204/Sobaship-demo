@@ -4,8 +4,8 @@ export class CreateAssetDto {
   @IsString()
   name: string;
 
-  @IsString()
-  code: string;
+  // @IsString()
+  // code: string;
 
   @IsString()
   group: string;
