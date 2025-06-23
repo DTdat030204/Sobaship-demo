@@ -94,4 +94,22 @@ export class AssetsService {
       where: { id },
     });
   }
+
+
+  async get_all_maintenance_schedule() {
+    return this.prisma.asset.findMany({
+      where: {                                  // ở đây dùng where để ;ọc ra các thông tin sản phẩm.
+        nextMaintenanceDate: { not: null },
+      },
+      orderBy: { nextMaintenanceDate: 'asc' },    // dùng orderBy để sắp xếp thứ tự các thông tin theo 1 trường nhất định.
+      select: {                                     // Dùng select để lựa chọn những thông tin đc xuất hiện.
+        name: true,
+        group: true,
+        nextMaintenanceDate: true,
+      },
+    });
+  }
+
+  async 
+
 }

@@ -25,7 +25,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);
 
-
+  console.log("Api docs xem ở: http://localhost:3000/api-docs")
 
 
 

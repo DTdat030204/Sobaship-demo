@@ -41,4 +41,11 @@ export class AssetsController {
   remove(@Param('id') id: string) {
     return this.assetsService.remove(+id);
   }
+
+
+  @Get('all_maintenance_schedule')
+  get_all_maintennnce_schedule() {
+    return this.assetsService.get_all_maintenance_schedule();
+  }
+  
 }
