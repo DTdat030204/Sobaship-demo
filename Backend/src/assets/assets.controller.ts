@@ -42,6 +42,11 @@ export class AssetsController {
     return this.assetsService.remove(+id);
   }
 
+  @Get(`total-value`)
+  getTotalValue() {
+    return this.assetsService.gettotalprice();
+  }
+
 
   // @Get('all_maintenance_schedule')
   // get_all_maintennnce_schedule() {

@@ -1,3 +1,96 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { CreateAssetDto, UpdateAssetDto } from './dto/asset.dto';
+
+@Injectable()
+export class AssetsService {
+  constructor(private prisma: PrismaService) { }
+
+  async create(dto: CreateAssetDto) {
+    const asset = await this.prisma.asset.create({
+      data: {
+        ...dto,
+        purchaseDate: new Date(dto.purchaseDate),
+      },
+    });
+    return asset;
+  }
+
+  async findAll() {
+    return this.prisma.asset.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async findByName(name: string) {
+    return this.prisma.asset.findMany({
+      where: { name: { contains: name, mode: 'insensitive' } },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async findByGroup(group: string) {
+    return this.prisma.asset.findMany({
+      where: { group: { contains: group, mode: 'insensitive' } },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async findByStatus(status: string) {
+    return this.prisma.asset.findMany({
+      where: { status: { contains: status, mode: 'insensitive' } },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async update(id: number, dto: UpdateAssetDto) {
+    return this.prisma.asset.update({
+      where: { id },
+      data: {
+        ...dto,
+        purchaseDate: dto.purchaseDate ? new Date(dto.purchaseDate) : undefined,
+      },
+    });
+  }
+
+  async remove(id: number) {
+    return this.prisma.asset.delete({
+      where: { id },
+    });
+  }
+
+  async gettotalprice() {
+    const result = await this.prisma.asset.aggregate({
+      _sum: {
+        price: true,
+      },
+    });
+
+    return {
+      totalAssetValue: result._sum.price ?? 0,
+    };
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // // Đây là file chứa các logic về việc quản lý tài sản (thêm, sửa xóa, lấy danh sách).
 
 // // import decorate này để đánh dấu class đó là Service, có thể đc ịnect vào các class khác nếu muốn.
@@ -107,66 +200,3 @@
 //   // }
 // }
 
-
-
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { CreateAssetDto, UpdateAssetDto } from './dto/asset.dto';
-
-@Injectable()
-export class AssetsService {
-  constructor(private prisma: PrismaService) {}
-
-  async create(dto: CreateAssetDto) {
-    const asset = await this.prisma.asset.create({
-      data: {
-        ...dto,
-        purchaseDate: new Date(dto.purchaseDate),
-      },
-    });
-    return asset;
-  }
-
-  async findAll() {
-    return this.prisma.asset.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
-  }
-
-  async findByName(name: string) {
-    return this.prisma.asset.findMany({
-      where: { name: { contains: name, mode: 'insensitive' } },
-      orderBy: { createdAt: 'desc' },
-    });
-  }
-
-  async findByGroup(group: string) {
-    return this.prisma.asset.findMany({
-      where: { group: { contains: group, mode: 'insensitive' } },
-      orderBy: { createdAt: 'desc' },
-    });
-  }
-
-  async findByStatus(status: string) {
-    return this.prisma.asset.findMany({
-      where: { status: { contains: status, mode: 'insensitive' } },
-      orderBy: { createdAt: 'desc' },
-    });
-  }
-
-  async update(id: number, dto: UpdateAssetDto) {
-    return this.prisma.asset.update({
-      where: { id },
-      data: {
-        ...dto,
-        purchaseDate: dto.purchaseDate ? new Date(dto.purchaseDate) : undefined,
-      },
-    });
-  }
-
-  async remove(id: number) {
-    return this.prisma.asset.delete({
-      where: { id },
-    });
-  }
-}
