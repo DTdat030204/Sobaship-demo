@@ -57,5 +57,21 @@ export class MaintenanceScheduleService {
     });
   }
   
+
+  async getTotalCostByAsset(assetId: number) {
+    const result = await this.prisma.maintenanceSchedule.aggregate({
+      where: {
+        assetId: assetId,
+        cost: { not: null }
+      },
+      _sum: {
+        cost: true,
+      },
+    });
+    return {
+      assetId,
+      totalMaintenanceCost: result._sum.cost ?? 0,        // nếu null thì trả về 0.
+    };
+  }
   
 }

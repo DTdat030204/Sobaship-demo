@@ -3,6 +3,7 @@
 import { Controller, Post, Body, Get, Query, Patch, Param } from '@nestjs/common';
 import { MaintenanceScheduleService } from './maintenance-schedule.service';
 import { ConfirmMaintenanceDto, CreateAutoMaintenanceDto, CreateManualMaintenanceDto } from './dto/maintenance-schedule.dto';
+import { parse } from 'path';
 
 @Controller('maintenance-schedules')
 export class MaintenanceScheduleController {
@@ -45,4 +46,13 @@ export class MaintenanceScheduleController {
     return this.maintenanceScheduleService.confirm(+id, body.cost);
   }
 
+
+  @Get('total-cost')
+  getTotalCost(@Query('assetId') assetId: string) {
+    const id = parseInt(assetId, 10);
+    if (isNaN(id)) {
+      return {message: `Không tồn tại id này.`}
+    }
+    return this.maintenanceScheduleService.getTotalCostByAsset(id);
+  }
 }
