@@ -43,9 +43,9 @@ export class AssetsController {
   }
 
 
-  @Get('all_maintenance_schedule')
-  get_all_maintennnce_schedule() {
-    return this.assetsService.get_all_maintenance_schedule();
-  }
+  // @Get('all_maintenance_schedule')
+  // get_all_maintennnce_schedule() {
+  //   return this.assetsService.get_all_maintenance_schedule();
+  // }
   
 }

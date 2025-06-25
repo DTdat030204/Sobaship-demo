@@ -17,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AssetsModule } from './assets/assets.module';
+import { MaintenanceScheduleModule } from './maintenance-schedule/maintenance-schedule.module';
 
 
 
@@ -29,6 +30,7 @@ import { AssetsModule } from './assets/assets.module';
     UsersModule,
     PrismaModule,
     AssetsModule,
+    MaintenanceScheduleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
