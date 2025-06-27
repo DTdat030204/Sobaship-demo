@@ -14,14 +14,16 @@ export class AuthService {
     const user = await this.prisma.user.create({
       data: {
         email: dto.email,
+        name: dto.name,
         hash: hash,
       },
     });
 
     return {
-      message: 'User signed up successfully',
+      message: 'Đăng kí thành công.',
       data: {
         id: user.id,
+        name: user.name,
         email: user.email,
         createdAt: user.createdAt,
       },
@@ -29,10 +31,22 @@ export class AuthService {
   }
 
   async signin(dto: SigninDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { email: dto.email },
+    });
+    if (!user) {
+      return { message: `Không tìm thấy người dùng này.` };
+    }
+    const Checkpass = await bcrypt.compare(dto.password, user.hash);
+    if (!Checkpass) {
+      return { message: `Sai mật khẩu.` };
+    }
     return {
-      message: 'User signed in successfully',
+      message: `Đăng nhập thành công.`,
       data: {
-        email: dto.email,
+        id: user.id,
+        name: user.name,
+        email: user.email,
       },
     };
   }

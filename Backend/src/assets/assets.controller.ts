@@ -21,7 +21,6 @@ export class AssetsController {
     return this.assetsService.findByName(name);
   }
 
-  
   @Get('by-group/:group')
   findByGroup(@Param('group') group: string) {
     return this.assetsService.findByGroup(group);
@@ -46,11 +45,4 @@ export class AssetsController {
   getTotalValue() {
     return this.assetsService.gettotalprice();
   }
-
-
-  // @Get('all_maintenance_schedule')
-  // get_all_maintennnce_schedule() {
-  //   return this.assetsService.get_all_maintenance_schedule();
-  // }
-  
 }
