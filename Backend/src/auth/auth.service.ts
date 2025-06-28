@@ -2,10 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { SignupDto, SigninDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service'; 
+import { JwtService } from '@nestjs/jwt';
+
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {} 
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService,
+  ) { } 
 
   async signup(dto: SignupDto) {
     const hash = await bcrypt.hash(dto.password, 10);
@@ -41,13 +46,18 @@ export class AuthService {
     if (!Checkpass) {
       return { message: `Sai mật khẩu.` };
     }
+
+    const payload = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    }
+
+    const token = await this.jwtService.signAsync(payload);
+
     return {
       message: `Đăng nhập thành công.`,
-      data: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
+      token,
     };
   }
 }
