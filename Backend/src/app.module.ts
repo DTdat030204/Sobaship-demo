@@ -14,7 +14,6 @@ import { AppService } from './app.service';
 
 // Dưới đây là các module thật sự của app đang dùng.
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AssetsModule } from './assets/assets.module';
 import { MaintenanceScheduleModule } from './maintenance-schedule/maintenance-schedule.module';
@@ -27,7 +26,6 @@ import { MaintenanceScheduleModule } from './maintenance-schedule/maintenance-sc
       isGlobal: true, 
     }),
     AuthModule,
-    UsersModule,
     PrismaModule,
     AssetsModule,
     MaintenanceScheduleModule,

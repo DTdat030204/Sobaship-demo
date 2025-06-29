@@ -1,10 +1,13 @@
 // src/maintenance-schedule/maintenance-schedule.controller.ts
 
-import { Controller, Post, Body, Get, Query, Patch, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query, Patch, Param, UseGuards } from '@nestjs/common';
 import { MaintenanceScheduleService } from './maintenance-schedule.service';
 import { ConfirmMaintenanceDto, CreateAutoMaintenanceDto, CreateManualMaintenanceDto } from './dto/maintenance-schedule.dto';
 import { parse } from 'path';
+import { AuthGuard } from '@nestjs/passport';
 
+
+@UseGuards(AuthGuard(`jwt`))
 @Controller('maintenance-schedules')
 export class MaintenanceScheduleController {
   constructor(private readonly maintenanceScheduleService: MaintenanceScheduleService) {}

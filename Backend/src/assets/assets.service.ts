@@ -4,21 +4,21 @@ import { CreateAssetDto, UpdateAssetDto } from './dto/asset.dto';
 
 @Injectable()
 export class AssetsService {
-  constructor(private prisma: PrismaService) { }
-
-  async create(dto: CreateAssetDto) {
-    const asset = await this.prisma.asset.create({
+  constructor(private prisma: PrismaService) { }       // PrismaService ở đây là service dùng để giao tiếp với db. 
+  // constructor là cách để thao tác với db.
+  async create(dto: CreateAssetDto) {             
+    const asset = await this.prisma.asset.create({        // create để tạo mới 1 bản ghi. 
       data: {
-        ...dto,
-        purchaseDate: new Date(dto.purchaseDate),
+        ...dto,                        // phần này là copy hết các field của dto mà truyền vào. 
+        purchaseDate: new Date(dto.purchaseDate),               
       },
     });
     return asset;
   }
 
   async findAll() {
-    return this.prisma.asset.findMany({
-      orderBy: { createdAt: 'desc' },
+    return this.prisma.asset.findMany({                
+      orderBy: { createdAt: 'desc' },           // desc là viết tắt của descending (giảm dần), ở đây là mới nhất nhất lên trc. 
     });
   }
 
