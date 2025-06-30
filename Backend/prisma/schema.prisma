@@ -60,3 +60,23 @@ model MaintenanceSchedule {
   createdAt                 DateTime @default(now())
   updatedAt                 DateTime @updatedAt
 }
+
+
+
+model Engine {
+  id        Int
+  model     String
+  assetId   Int     @unique       // Khóa ngoại
+  asset     Asset   @relation(fields: [assetId], references:[id])   // @relation giúp khai báo 1 mối quan hệ giữa 2 bảng (assetId tham chiếu đến id của bảng Asset)   
+} 
+
+
+
+
+model EngineActivityLog{
+  id            Int
+  engine        Engine       @relation(fields:[engineId], references:[id])  
+  engineId      Int
+  HoursUsed     Float
+  note          String?
+}

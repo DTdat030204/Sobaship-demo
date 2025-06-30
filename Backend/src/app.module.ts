@@ -29,6 +29,7 @@ import { MaintenanceScheduleModule } from './maintenance-schedule/maintenance-sc
     PrismaModule,
     AssetsModule,
     MaintenanceScheduleModule,
+    EngineModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -94,6 +95,7 @@ export class AppModule {}
 // import { UsersModule } from './users/users.module';
 // import { BookmarksModule } from './bookmarks/bookmarks.module';
 // import { PrismaModule } from './prisma/prisma.module'; 
+import { EngineModule } from './engine/engine.module';
 
 
 // @Module({
