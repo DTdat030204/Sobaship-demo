@@ -33,7 +33,9 @@ export class AssetsService {
 
   async findByName(name: string) {
     return this.prisma.asset.findMany({
-      where: { name: { contains: name, mode: 'insensitive' } },
+      where: {
+        name: { contains: name, mode: 'insensitive' }
+      },
       orderBy: { createdAt: 'desc' },
     });
   }

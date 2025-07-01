@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEngineActivityLogDto } from './dto/engine-activity-log.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { constants } from 'buffer';
 
 @Injectable()
 export class EngineActivityLogService { 
@@ -8,16 +9,24 @@ export class EngineActivityLogService {
   constructor(private prisma: PrismaService) {}
   
   findAll() {
-    return `This action returns all engineActivityLog`;
+    return this.prisma.engineActivityLog.findMany({
+    })
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} engineActivityLog`;
+    return this.prisma.engineActivityLog.findUnique({
+      where: {
+        id
+      },
+    });
   }
-
-
-  remove(id: number) {
-    return `This action removes a #${id} engineActivityLog`;
+ 
+  async remove(id: number) {                                 
+    return this.prisma.engineActivityLog.delete({
+      where: {
+        id
+      },
+    });
   }
 
   async create(dto: CreateEngineActivityLogDto) {
