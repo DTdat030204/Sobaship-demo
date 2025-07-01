@@ -6,13 +6,22 @@ import { CreateAssetDto, UpdateAssetDto } from './dto/asset.dto';
 export class AssetsService {
   constructor(private prisma: PrismaService) { }       // PrismaService ở đây là service dùng để giao tiếp với db. 
   // constructor là cách để thao tác với db.
-  async create(dto: CreateAssetDto) {             
+  async create(dto: CreateAssetDto) {                     // Hàm này dùng để tạo mới 1 tài sản, tránh nhầm với create ở dưới           
     const asset = await this.prisma.asset.create({        // create để tạo mới 1 bản ghi. 
       data: {
         ...dto,                        // phần này là copy hết các field của dto mà truyền vào. 
         purchaseDate: new Date(dto.purchaseDate),               
       },
     });
+
+    if (dto.group === "Động cơ") {
+      await this.prisma.engine.create({
+        data: {
+          assetId: asset.id,                  // assetId ở đây là khóa ngoại của bảng engine để liên kết với bảng Asset đó.
+        },
+      });
+    }
+
     return asset;
   }
 
